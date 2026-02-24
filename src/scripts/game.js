@@ -11,8 +11,28 @@ export default class Game{
         this.inputHandler = new InputHandler(this);
     }
 
+    handleInputActions(){
+        if(this.inputHandler.keys.down.pressed){
+            console.log('down pressed');
+        }       
+        if(this.inputHandler.keys.up.pressed){
+            console.log('up pressed');
+        }
+        if(this.inputHandler.keys.left.pressed){
+            console.log('left pressed');
+        }
+        if(this.inputHandler.keys.right.pressed){
+            console.log('right pressed');
+        }
+        if(this.inputHandler.keys.space.pressed){
+            console.log('space pressed');
+        }
+    }
+
     update(){
         this.player.update();
+        this.handleInputActions();
+        
     }
 
     draw(ctx){
