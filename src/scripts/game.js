@@ -1,5 +1,6 @@
 import Player from "./models/player.js";
-import InputHandler from "./models/utils/input.js";
+import Projectile from "./models/projectile.js";
+import InputHandler from "./utils/input.js";
 
 export default class Game{
     constructor(canvas){
@@ -9,24 +10,28 @@ export default class Game{
 
         this.player = new Player(this);
         this.inputHandler = new InputHandler(this);
+
+        this.projectilesPool = [];
+        this.numOfProjectiles = 10;
+        this.createProjectiles();
+
+    }
+
+    createProjectiles(){
+        for(let i = 0; i < this.numOfProjectiles; i++){
+            this.projectilesPool.push(new Projectile());
+        }
+    }
+
+    getProjectile(){
+        for(let i = 0; i < this.numOfProjectiles; i++){
+            if(this.projectilesPool[i].free){
+                return this.projectilesPool[i];
+            }
+        }
     }
 
     handleInputActions(){
-        // if(this.inputHandler.keys.down.pressed){
-        //     console.log('down pressed');
-        // }       
-        // if(this.inputHandler.keys.up.pressed){
-        //     console.log('up pressed');
-        // }
-        // if(this.inputHandler.keys.left.pressed){
-        //     console.log('left pressed');
-        // }
-        // if(this.inputHandler.keys.right.pressed){
-        //     console.log('right pressed');
-        // }
-        // if(this.inputHandler.keys.space.pressed){
-        //     console.log('space pressed');
-        // }
         if(this.inputHandler.keys.right.pressed){
             this.player.speedX = 1;
         }
@@ -36,15 +41,22 @@ export default class Game{
         else{
             this.player.speedX = 0;
         }
+
+        if(this.inputHandler.keys.space.pressed){
+            this.player.shoot();
+        }
     }
 
     update(){
         this.player.update();
         this.handleInputActions();
-        
+        this.projectilesPool.forEach(projectile => {
+            projectile.update();
+        });      
     }
 
     draw(ctx){
         this.player.draw(ctx);
+        this.projectilesPool.forEach(projectile => projectile.draw(ctx))
     }
 }

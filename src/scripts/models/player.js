@@ -28,6 +28,17 @@ export default class Player{
         }
     }
 
+    shoot(){
+        let projectile = this.game.getProjectile();
+        if(projectile){
+            let projectilePosition = {
+                x: this.position.x + this.width / 2,
+                y: this.position.y
+            };
+            projectile.start(projectilePosition);
+        }
+    }
+
     update(){
         this.position.x += (this.speedX * this.speedModifier);
         this.handleBoudaries();
