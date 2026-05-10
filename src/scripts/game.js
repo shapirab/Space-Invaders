@@ -1,5 +1,6 @@
 import Player from "./models/player.js";
 import Projectile from "./models/projectile.js";
+import Wave from "./models/wave.js";
 import InputHandler from "./utils/input.js";
 
 export default class Game{
@@ -14,6 +15,13 @@ export default class Game{
         this.projectilesPool = [];
         this.numOfProjectiles = 10;
         this.createProjectiles();
+
+        this.enemyRows = 2;
+        this.enemyColumns = 3;
+        this.enemySize = 80;
+
+        this.waves = [];
+        this.waves.push(new Wave(this));
 
     }
 
@@ -52,11 +60,16 @@ export default class Game{
         this.handleInputActions();
         this.projectilesPool.forEach(projectile => {
             projectile.update();
-        });      
+        });  
+        
+        this.waves.forEach(wave => {
+            wave.update();
+        });
     }
 
     draw(ctx){
         this.player.draw(ctx);
         this.projectilesPool.forEach(projectile => projectile.draw(ctx))
+        this.waves.forEach(wave => wave.draw(ctx));
     }
 }
