@@ -51,7 +51,7 @@ export default class Wave{
         }
         this.position.x += this.speed.x;
         this.position.y += this.speed.y;
-        this.enemies.filter(enemy => !enemy.markedForDeletion);
+        this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);    
         this.updateEnemies();
     }
 
