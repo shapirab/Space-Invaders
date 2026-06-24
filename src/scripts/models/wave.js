@@ -34,6 +34,10 @@ export default class Wave{
         }
     }
 
+    isEmpty(){
+        return this.enemies.length <= 0;
+    }
+
     updateEnemies(){
         this.enemies.forEach(enemy => {
             enemy.update(this.position);
@@ -56,8 +60,8 @@ export default class Wave{
     }
 
     draw(ctx){
-        ctx.strokeStyle = 'black';
-        ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
+        // ctx.strokeStyle = 'black';
+        // ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
         this.enemies.forEach(enemy => {
             enemy.draw(ctx);
         });

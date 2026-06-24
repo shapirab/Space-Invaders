@@ -19,9 +19,19 @@ export default class Enemy {
 
     //some() stops iterating as soon as it finds the first true, and returns true/false for the whole call . 
     // See https://claude.ai/chat/a79795f2-9bee-4aac-995b-035a84e8539c
+    // isShot(){
+    //     return this.game.projectilesPool.some(projectile => {
+    //         return this.collisionDetector.detectRectCollision(projectile, this);
+    //     });
+    // }
+
     isShot(){
-        return this.game.projectilesPool.some(projectile => {
-            return this.collisionDetector.detectRectCollision(projectile, this);
+        this.game.projectilesPool.forEach(projectile => {
+            if(!projectile.free && this.collisionDetector.detectRectCollision(projectile, this)){
+                projectile.reset();
+                this.markedForDeletion = true;
+                console.log('enemy::isShot(). projectile: ', projectile)
+            }
         });
     }
 
@@ -29,9 +39,10 @@ export default class Enemy {
         this.position.x = this.positionWithinWave.x + wavePosition.x;
         this.position.y = this.positionWithinWave.y + wavePosition.y;
 
-        if(this.isShot()){
-            this.markedForDeletion = true;
-        }
+        this.isShot();
+        // if(this.isShot()){
+        //     this.markedForDeletion = true;
+        // }
     }
 
     draw(ctx){
