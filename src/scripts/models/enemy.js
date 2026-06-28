@@ -30,7 +30,7 @@ export default class Enemy {
             if(!projectile.free && this.collisionDetector.detectRectCollision(projectile, this)){
                 projectile.reset();
                 this.markedForDeletion = true;
-                console.log('enemy::isShot(). projectile: ', projectile)
+                this.game.score += this.maxLives;
             }
         });
     }
@@ -47,5 +47,13 @@ export default class Enemy {
 
     draw(ctx){
         ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
+    }
+}
+
+export class BeetlemorphEnemy extends Enemy{
+    constructor(game, positionWithinWave){
+        super(game, positionWithinWave);
+        this.lives = 1;
+        this.maxLives = this.lives;
     }
 }

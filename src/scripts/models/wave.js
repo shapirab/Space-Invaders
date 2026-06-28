@@ -1,4 +1,4 @@
-import Enemy from "./enemy.js";
+import { BeetlemorphEnemy } from "./enemy.js";
 
 export default class Wave{
     constructor(game){
@@ -28,8 +28,7 @@ export default class Wave{
                     x: col * this.game.enemySize,
                     y: row * this.game.enemySize
                 };
-                this.enemies.push(new Enemy(this.game, enemyPositionWithinWave));
-
+                this.enemies.push(new BeetlemorphEnemy(this.game, enemyPositionWithinWave));
             }
         }
     }

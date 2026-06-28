@@ -2,6 +2,7 @@ import Player from "./models/player.js";
 import Projectile from "./models/projectile.js";
 import Wave from "./models/wave.js";
 import InputHandler from "./utils/input.js";
+import UI from './utils/ui.js';
 
 export default class Game {
   constructor(canvas) {
@@ -22,6 +23,10 @@ export default class Game {
 
     this.waves = [];
     this.waves.push(new Wave(this));
+
+    this.ui = new UI(this);
+
+    this.score = 0;
   }
 
   createProjectiles() {
@@ -95,5 +100,6 @@ export default class Game {
     this.player.draw(ctx);
     this.projectilesPool.forEach((projectile) => projectile.draw(ctx));
     this.waves.forEach((wave) => wave.draw(ctx));
+    this.ui.draw(ctx);
   }
 }
